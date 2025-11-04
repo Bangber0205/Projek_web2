@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Filters\PermissionFilter;
+use App\Filters\RoleFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -12,6 +14,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use Myth\Auth\Entities\Permission;
 
 class Filters extends BaseFilters
 {
@@ -34,6 +37,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        // add
+        'login'         => LoginFilter::class,
+        'role'          => RoleFilter::class,
+        'permission'    => PermissionFilter::class
     ];
 
     /**
@@ -72,13 +79,14 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
+            'honeypot',
+            'csrf',
             // 'invalidchars',
         ],
         'after' => [
             // 'honeypot',
             // 'secureheaders',
+            'toolbar'
         ],
     ];
 
