@@ -46,7 +46,7 @@ class AuthController extends Controller
         // No need to show a login form if the user
         // is already logged in.
         if ($this->auth->check()) {
-            $redirectURL = session('redirect_url') ?? site_url('/');
+            $redirectURL = session('redirect_url') ?? site_url('superadmin/dashboard');
             unset($_SESSION['redirect_url']);
 
             return redirect()->to($redirectURL);
@@ -93,10 +93,10 @@ class AuthController extends Controller
             return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
         }
 
-        $redirectURL = session('redirect_url') ?? site_url('/');
-        unset($_SESSION['redirect_url']);
-
-        return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
+        // setelah login ke dashboard
+        return redirect()->to(site_url('superadmin/dashboard'))
+            ->withCookies()
+            ->with('message', lang('Auth.loginSuccess'));        
     }
 
     /**

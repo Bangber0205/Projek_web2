@@ -15,6 +15,7 @@ use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use Myth\Auth\Entities\Permission;
+use Myth\Auth\Filters\LoginFilter;  //add
 
 class Filters extends BaseFilters
 {
