@@ -88,6 +88,9 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
         }
 
+        // Save login input to session key
+        session()->set('login_input', $login);
+
         // Is the user being forced to reset their password?
         if ($this->auth->user()->force_pass_reset === true) {
             return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();

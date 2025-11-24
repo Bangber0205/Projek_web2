@@ -20,17 +20,26 @@
     <script src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>      <!-- alpine js -->
 </head>
-<body class="bg-[#F9FAFB] font-inter">
+<body class="bg-[#F9FAFB] font-inter overflow-hidden h-screen m-0 p-0">
+    <style>
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        * {
+            box-sizing: border-box;
+        }
+    </style>
 
-    <!-- Sidebar -->
+    <!-- Navbar (Fixed at top) -->
     <?= view('layouts/navbar') ?>
 
-    <div class="flex-1 flex min-h-screen pt-[75px]">
-        <!-- Navbar -->
+    <div class="flex h-[calc(100vh-75px)] mt-[75px]">
+        <!-- Sidebar (Fixed height with scroll) -->
         <?= view('layouts/sidebar') ?>
 
-        <!-- Konten utama -->
-        <main class="p-6 flex-1">
+        <!-- Konten utama (Independent scroll) -->
+        <main class="flex-1 overflow-y-auto p-6">
             <?= $this->renderSection('content') ?>
         </main>
     </div>

@@ -9,7 +9,35 @@ $routes->get('/', 'Pages::index');
 
 $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::attemptLogin');
+$routes->get('register', 'AuthController::register');
+$routes->post('register', 'AuthController::attemptRegister');
+$routes->get('logout', 'AuthController::logout');
 
-$routes->group('superadmin', ['filter' => 'login'], function($routes) {
-    $routes->get('dashboard', 'SuperAdmin\Dashboard::index');   
+$routes->group('superadmin', function($routes) {
+    $routes->get('dashboard', 'SuperAdmin\Dashboard::index');
+    $routes->get('users', 'SuperAdmin\UserController::index');
+    $routes->get('users/create', 'SuperAdmin\UserController::create');
+    $routes->post('users/store', 'SuperAdmin\UserController::store');
+    $routes->get('users/edit/(:num)', 'SuperAdmin\UserController::edit/$1');
+    $routes->post('users/update/(:num)', 'SuperAdmin\UserController::update/$1');
+    $routes->post('users/delete/(:num)', 'SuperAdmin\UserController::delete/$1');
+    $routes->get('branches', 'SuperAdmin\BranchController::index');
+    $routes->get('branches/create', 'SuperAdmin\BranchController::create');
+    $routes->post('branches/store', 'SuperAdmin\BranchController::store');
+    $routes->get('branches/edit/(:num)', 'SuperAdmin\BranchController::edit/$1');
+    $routes->post('branches/update/(:num)', 'SuperAdmin\BranchController::update/$1');
+    $routes->post('branches/delete/(:num)', 'SuperAdmin\BranchController::delete/$1');
+    $routes->get('categories', 'SuperAdmin\CategoryController::index');
+    $routes->get('categories/create', 'SuperAdmin\CategoryController::create');
+    $routes->post('categories/store', 'SuperAdmin\CategoryController::store');
+    $routes->get('categories/edit/(:num)', 'SuperAdmin\CategoryController::edit/$1');
+    $routes->post('categories/update/(:num)', 'SuperAdmin\CategoryController::update/$1');
+    $routes->post('categories/delete/(:num)', 'SuperAdmin\CategoryController::delete/$1');
+    $routes->get('categories/detail/(:num)', 'SuperAdmin\CategoryController::detail/$1');
+    $routes->get('items', 'SuperAdmin\ItemController::index');
+$routes->get('items/create', 'SuperAdmin\ItemController::create');
+$routes->post('items/store', 'SuperAdmin\ItemController::store');
+$routes->get('penjualan/laporan', 'SuperAdmin\SalesReportController::index');
+$routes->get('stok/laporan', 'SuperAdmin\StockReportController::index');
+$routes->get('keuangan/cabang', 'SuperAdmin\KeuanganCabangController::index');
 });

@@ -1,6 +1,6 @@
 <?php $uri = ltrim(service('uri')->getPath(), '/');?>
 
-<div x-data class="w-76 min-h-screen bg-white px-5 pt-8 space-y-6 font-inter overflow-auto">
+<div x-data class="w-76 h-full bg-white px-5 pt-8 space-y-6 font-inter overflow-y-auto">
 
   <!-- Dashboard -->
   <div class="">
@@ -18,7 +18,7 @@
   </div>
 
   <!-- Kelola Cabang -->
-  <div x-data="{ open: true }" class="">
+  <div x-data="{ open: false }" class="">
     <button @click="open = !open" class="flex justify-between w-full py-2 items-center mb-1">
       <div class="flex items-center gap-4">
         <div class="w-6 h-6 flex justify-center items-center">
@@ -36,7 +36,7 @@
 
     <!-- Smooth animation -->
     <div x-show="open" x-collapse class="flex flex-col text-sm space-y-1 overflow-hidden">
-      <a href="/superadmin/cabang" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+      <a href="<?= base_url('superadmin/branches') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/branches' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
         <div class="w-6 h-6 flex justify-center items-center">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
@@ -45,7 +45,7 @@
         <span>Daftar Cabang</span>
       </a>
 
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+      <a href="<?= base_url('superadmin/branches/create') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/branches/create' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
         <div class="w-6 h-6 flex justify-center items-center">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
@@ -58,7 +58,7 @@
   </div>
 
   <!-- Kelola User -->
-  <div x-data="{ open: true }" class="">
+  <div x-data="{ open: false }" class="">
     <button @click="open = !open" class="flex justify-between w-full py-2 items-center mb-1">
       <div class="flex items-center gap-4">
         <div class="w-6 h-6 flex justify-center items-center">
@@ -77,7 +77,7 @@
 
     <!-- Smooth animation -->
     <div x-show="open" x-collapse class="flex flex-col text-sm space-y-1 overflow-hidden">
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+      <a href="<?= base_url('superadmin/users') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/users' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
         <div class="w-6 h-6 flex justify-center items-center">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
@@ -85,11 +85,19 @@
         </div>
         <span>Daftar User</span>
       </a>
+      <a href="<?= base_url('superadmin/users/create') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/users/create' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+        <div class="w-6 h-6 flex justify-center items-center">
+          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
+          </svg>
+        </div>
+        <span>Tambah User</span>
+      </a>
     </div>
   </div>
 
   <!-- Laporan Global -->
-  <div x-data="{ open: true }" class="">
+  <div x-data="{ open: false }" class="">
     <button @click="open = !open" class="flex justify-between w-full py-2 items-center mb-1">
       <div class="flex items-center gap-4">
         <div class="w-6 h-6 flex justify-center items-center">
@@ -109,22 +117,22 @@
 
     <!-- Smooth animation -->
     <div x-show="open" x-collapse class="flex flex-col text-sm space-y-1 overflow-hidden">
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
-        <div class="w-6 h-6 flex justify-center items-center">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
-          </svg>
-        </div>
-        <span>Penjualan</span>
-      </a>
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
-        <div class="w-6 h-6 flex justify-center items-center">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
-          </svg>
-        </div>
-        <span>Stok</span>
-      </a>
+<a href="<?= base_url('superadmin/penjualan/laporan') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/penjualan/laporan' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+  <div class="w-6 h-6 flex justify-center items-center">
+    <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
+    </svg>
+  </div>
+  <span>Penjualan</span>
+</a>
+<a href="<?= base_url('superadmin/stok/laporan') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/stok/laporan' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+  <div class="w-6 h-6 flex justify-center items-center">
+    <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
+    </svg>
+  </div>
+  <span>Stok</span>
+</a>
       <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
         <div class="w-6 h-6 flex justify-center items-center">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +145,7 @@
   </div>
 
   <!-- Keuangan -->
-  <div x-data="{ open: true }" class="">
+  <div x-data="{ open: false }" class="">
     <button @click="open = !open" class="flex justify-between w-full py-2 items-center mb-1">
       <div class="flex items-center gap-4">
         <div class="w-6 h-6 flex justify-center items-center">
@@ -157,19 +165,19 @@
 
     <!-- Smooth animation -->
     <div x-show="open" x-collapse class="flex flex-col text-sm space-y-1 overflow-hidden">
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
-        <div class="w-6 h-6 flex justify-center items-center">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
-          </svg>
-        </div>
-        <span>Laporan Keuangan Cabang</span>
-      </a>
+<a href="<?= base_url('superadmin/keuangan/cabang') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/keuangan/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+  <div class="w-6 h-6 flex justify-center items-center">
+    <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
+    </svg>
+  </div>
+  <span>Laporan Keuangan Cabang</span>
+</a>
     </div>
   </div>
 
   <!-- Kategori Barang -->
-  <div x-data="{ open: true }" class="">
+  <div x-data="{ open: false }" class="">
     <button @click="open = !open" class="flex justify-between w-full py-2 items-center mb-1">
       <div class="flex items-center gap-4">
         <div class="w-6 h-6 flex justify-center items-center">
@@ -190,7 +198,7 @@
 
     <!-- Smooth animation -->
     <div x-show="open" x-collapse class="flex flex-col text-sm space-y-1 overflow-hidden">
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+      <a href="<?= base_url('superadmin/categories') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/categories' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
         <div class="w-6 h-6 flex justify-center items-center">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
@@ -198,13 +206,13 @@
         </div>
         <span>Daftar Kategori</span>
       </a>
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
+      <a href="<?= base_url('superadmin/items') ?>" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/items' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
         <div class="w-6 h-6 flex justify-center items-center">
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
           </svg>
         </div>
-        <span>Barang</span>
+        <span>Daftar Barang</span>
       </a>
     </div>
   </div>

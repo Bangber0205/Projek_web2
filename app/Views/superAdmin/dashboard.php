@@ -11,7 +11,7 @@
 <div class="grid grid-cols-4 gap-4">
   <?= view('components/card-stats', [
       'title' => 'Total Cabang',
-      'value' => 12,
+      'value' => $totalBranches ?? 0,
       'bg_icon' => 'bg-[#DBEAFE]',
       'icon'  => '
           <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
 
   <?= view('components/card-stats', [
       'title' => 'Total Pengguna',
-      'value' => 48,
+      'value' => isset($totalUsers) && $totalUsers >= 1 ? $totalUsers : 0,
       'bg_icon' => 'bg-[#DCFCE7]',
       'icon'  => '
           <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,15 +41,15 @@
 
   <?= view('components/card-stats', [
       'title' => 'Produk Aktif',
-      'value' => 412,
+      'value' => isset($totalActiveProducts) && $totalActiveProducts > 0 ? $totalActiveProducts : 0,
       'bg_icon' => 'bg-[#F3E8FF]',
       'icon'  => '
           <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0.75 6.4375V1.2375C0.75 1.10821 0.800571 0.984209 0.890589 0.892785C0.980606 0.801361 1.1027 0.75 1.23 0.75H6.1724C6.28681 0.749991 6.39745 0.791484 6.4844 0.867L9.0156 3.0705C9.10255 3.14602 9.21319 3.18751 9.3276 3.1875H16.27C16.333 3.1875 16.3955 3.20011 16.4537 3.22461C16.5119 3.24911 16.5648 3.28502 16.6094 3.33029C16.654 3.37555 16.6893 3.4293 16.7135 3.48844C16.7376 3.54759 16.75 3.61098 16.75 3.675V6.4375M0.75 6.4375V13.2625C0.75 13.3918 0.800571 13.5158 0.890589 13.6072C0.980606 13.6986 1.1027 13.75 1.23 13.75H16.27C16.3973 13.75 16.5194 13.6986 16.6094 13.6072C16.6994 13.5158 16.75 13.3918 16.75 13.2625V6.4375M0.75 6.4375H16.75" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>'
   ]) ?>
-
 </div>
+
 
 <!-- button cta -->
 <div class="mt-8 font-inter">
@@ -57,7 +57,7 @@
 
   <div class="grid grid-cols-3 gap-4 mt-4">
   <?= view('components/card-action', [
-      'link' => '#',
+      'link' => base_url('superadmin/branches/create'),
       'title' => 'Tambah Cabang',
       'desc' => 'Buat cabang baru',
       'bg_icon' => 'bg-[#DBEAFE]',
@@ -68,7 +68,7 @@
   ]) ?>
 
   <?= view('components/card-action', [
-      'link' => '#',
+      'link' => base_url('superadmin/users/create'),
       'title' => 'Tambah Pengguna',
       'desc' => 'Buat akun baru',
       'bg_icon' => 'bg-[#DCFCE7]',
@@ -97,91 +97,54 @@
   ]) ?>
 
 </div>
+
+<!-- New cards section -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+
+  <!-- Performa Cabang Card -->
+  <div class="bg-white border border-gray-200 shadow-sm rounded-lg p-6 flex flex-col">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-[#1F2937]">Performa Cabang</h2>
+      <a href="#" class="text-[#3B82F6] text-sm hover:underline">Lihat Semua</a>
+    </div>
+    <div class="flex flex-col divide-y divide-gray-200 gap-5">
+      <?php foreach ($branchPerformance as $index => $branch) : ?>
+        <div class="<?= ($index % 2 == 0) ? 'bg-gray-50' : 'bg-white' ?> rounded-lg">
+          <?= view('components/card-performa', [
+            'status' => $branch['status'],
+            'color' => $branch['color'],
+            'title' => $branch['title'],
+            'value' => $branch['value'],
+            'percentase' => $branch['percentase'],
+            'color_percentase' => $branch['color_percentase'],
+          ]) ?>
+        </div>
+      <?php endforeach ?>
+    </div>
+  </div>
+
+  <!-- Aktivitas Terbaru Card -->
+  <div class="bg-white border border-gray-200 shadow-sm rounded-lg p-6 flex flex-col">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-[#1F2937]">Aktivitas Terbaru</h2>
+      <a href="#" class="text-[#3B82F6] text-sm hover:underline">Lihat Semua</a>
+    </div>
+    <div class="flex flex-col gap-3">
+      <?php foreach ($recentActivities as $index => $activity) : ?>
+        <div class="<?= ($index % 2 == 0) ?>">
+          <?= view('components/card-aktivitas', [
+            'bg_icon' => $activity['bg_icon'],
+            'icon' => $activity['icon'],
+            'title' => $activity['title'],
+            'time' => $activity['time'],
+          ]) ?>
+        </div>
+      <?php endforeach ?>
+    </div>
+  </div>
+
 </div>
 
-
-<div class="grid grid-cols-2 gap-5 mt-9.5">
-    <!-- performa cabang -->
-    <div class="bg-white border border-[#e5e7eb] shadow-sm w-full p-6 rounded-lg">
-      <div class="flex items-center justify-between">
-        <h1 class="font-semibold text-lg text-text">Performa Cabang</h1>
-        <a href="#" class="text-sidebar-active font-medium text-sm">Lihat Semua</a>
-      </div>
-
-      <div class="flex flex-col gap-4 mt-7">
-        <?= view('components/card-performa', [
-            'color' => '#22C55E',
-            'title' => 'Cabang Jakarta Pusat',
-            'status' => 'aktif',
-            'value' => 4.2,
-            'percentase' => '+15%',
-            'color_percentase' => 'text-[#22C55E]',
-        ]) ?>
-        
-        <?= view('components/card-performa', [
-            'color' => '#22C55E',
-            'title' => 'Cabang Cilacap',
-            'status' => 'aktif',
-            'value' => 4.2,
-            'percentase' => '+15%',
-            'color_percentase' => 'text-[#22C55E]',
-        ]) ?>
-
-        <?= view('components/card-performa', [
-            'color' => '#EAB308',
-            'title' => 'Cabang Surabaya',
-            'status' => 'aktif',
-            'value' => 2.1,
-            'percentase' => '-3%',
-            'color_percentase' => 'text-[#DC2626]',
-        ]) ?>
-
-        <?= view('components/card-performa', [
-            'color' => '',
-            'title' => 'Cabang Medan',
-            'status' => 'non-aktif',
-            'value' => '',
-            'percentase' => '',
-            'color_percentase' => '',
-        ]) ?>
-      </div>
-    </div>
-
-    <!-- log activity -->
-    <div class="bg-white border border-[#e5e7eb] shadow-sm w-full p-6 rounded-lg">
-      <div class="flex items-center justify-between">
-        <h1 class="font-semibold text-lg text-text">Aktivitas Terbaru</h1>
-        <a href="#" class="text-sidebar-active font-medium text-sm">Lihat Semua</a>
-      </div>
-
-      <div class="flex flex-col gap-2 mt-7">
-        <?= view('components/card-aktivitas', [
-            'title' => 'Cabang Kroya telah ditambahkan',
-            'time' => '40 menit yang lalu',
-            'bg_icon' => 'bg-[#DBEAFE]',
-            'icon' => '<svg width="10.5" height="14" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.6875 0C0.755859 0 0 0.755859 0 1.6875V16.3125C0 17.2441 0.755859 18 1.6875 18H5.0625V15.1875C5.0625 14.2559 5.81836 13.5 6.75 13.5C7.68164 13.5 8.4375 14.2559 8.4375 15.1875V18H11.8125C12.7441 18 13.5 17.2441 13.5 16.3125V1.6875C13.5 0.755859 12.7441 0 11.8125 0H1.6875ZM2.25 8.4375C2.25 8.12813 2.50312 7.875 2.8125 7.875H3.9375C4.24687 7.875 4.5 8.12813 4.5 8.4375V9.5625C4.5 9.87187 4.24687 10.125 3.9375 10.125H2.8125C2.50312 10.125 2.25 9.87187 2.25 9.5625V8.4375ZM6.1875 7.875H7.3125C7.62187 7.875 7.875 8.12813 7.875 8.4375V9.5625C7.875 9.87187 7.62187 10.125 7.3125 10.125H6.1875C5.87813 10.125 5.625 9.87187 5.625 9.5625V8.4375C5.625 8.12813 5.87813 7.875 6.1875 7.875ZM9 8.4375C9 8.12813 9.25313 7.875 9.5625 7.875H10.6875C10.9969 7.875 11.25 8.12813 11.25 8.4375V9.5625C11.25 9.87187 10.9969 10.125 10.6875 10.125H9.5625C9.25313 10.125 9 9.87187 9 9.5625V8.4375ZM2.8125 3.375H3.9375C4.24687 3.375 4.5 3.62812 4.5 3.9375V5.0625C4.5 5.37187 4.24687 5.625 3.9375 5.625H2.8125C2.50312 5.625 2.25 5.37187 2.25 5.0625V3.9375C2.25 3.62812 2.50312 3.375 2.8125 3.375ZM5.625 3.9375C5.625 3.62812 5.87813 3.375 6.1875 3.375H7.3125C7.62187 3.375 7.875 3.62812 7.875 3.9375V5.0625C7.875 5.37187 7.62187 5.625 7.3125 5.625H6.1875C5.87813 5.625 5.625 5.37187 5.625 5.0625V3.9375ZM9.5625 3.375H10.6875C10.9969 3.375 11.25 3.62812 11.25 3.9375V5.0625C11.25 5.37187 10.9969 5.625 10.6875 5.625H9.5625C9.25313 5.625 9 5.37187 9 5.0625V3.9375C9 3.62812 9.25313 3.375 9.5625 3.375Z" fill="#2563EB"/>
-                      </svg>',
-        ]) ?>
-
-        <?= view('components/card-aktivitas', [
-            'title' => 'Manajer baru ditugaskan ke Cabang Cilacap',
-            'time' => '1 Jam yang lalu',
-            'bg_icon' => 'bg-[#DCFCE7]',
-            'icon' => '<svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_185_118)">
-                          <path d="M8 10C9.21242 10 10.3752 9.52589 11.2325 8.68198C12.0898 7.83807 12.5714 6.69347 12.5714 5.5C12.5714 4.30653 12.0898 3.16193 11.2325 2.31802C10.3752 1.47411 9.21242 1 8 1C6.78758 1 5.62482 1.47411 4.76751 2.31802C3.9102 3.16193 3.42857 4.30653 3.42857 5.5C3.42857 6.69347 3.9102 7.83807 4.76751 8.68198C5.62482 9.52589 6.78758 10 8 10ZM6.36786 11.6875C2.85 11.6875 0 14.493 0 17.9559C0 18.5324 0.475 19 1.06071 19H14.9393C15.525 19 16 18.5324 16 17.9559C16 14.493 13.15 11.6875 9.63214 11.6875H6.36786Z" fill="#16A34A"/>
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_185_118">
-                            <path d="M0 0H16V18H0V0Z" fill="white"/>
-                          </clipPath>
-                        </defs>
-                      </svg>',
-        ]) ?>
-      </div>
-    </div>
-</div>
-
+<!-- the rest of the original file unchanged -->
 
 <?= $this->endSection() ?>

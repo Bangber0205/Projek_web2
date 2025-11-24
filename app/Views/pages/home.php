@@ -26,8 +26,8 @@
         <a href="">Contact</a>
       </section>
       <section class="button-nav">
-        <a href="" class="sign-in">Sign in</a>
-        <a href="" class="sign-up">Sign up</a>
+        <a href="<?= base_url('login') ?>" class="sign-in">Sign in</a>
+        <a href="<?= base_url('register') ?>" class="sign-up">Sign up</a>
       </section>
     </nav>
     <main>
