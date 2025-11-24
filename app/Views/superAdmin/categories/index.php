@@ -3,10 +3,10 @@
 <?= $this->section('content') ?>
 
 <!-- Title -->
-<h1 class="text-3xl font-bold mt-3 mb-4 text-[#1F2937] font-inter">Daftar Kategori Barang</h1>
+<h1 class="text-3xl font-bold text-[#1F2937] font-inter">Daftar Kategori Barang</h1>
 
 <!-- Breadcrumb -->
-<nav class="flex mb-5" aria-label="Breadcrumb">
+<nav class="breadcrumb-border text-sm text-gray-400 mt-1 mb-5 border-b border-gray-300 pb-3" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         <li class="inline-flex items-center">
             <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">

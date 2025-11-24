@@ -35,9 +35,12 @@ $routes->group('superadmin', function($routes) {
     $routes->post('categories/delete/(:num)', 'SuperAdmin\CategoryController::delete/$1');
     $routes->get('categories/detail/(:num)', 'SuperAdmin\CategoryController::detail/$1');
     $routes->get('items', 'SuperAdmin\ItemController::index');
-$routes->get('items/create', 'SuperAdmin\ItemController::create');
-$routes->post('items/store', 'SuperAdmin\ItemController::store');
-$routes->get('penjualan/laporan', 'SuperAdmin\SalesReportController::index');
-$routes->get('stok/laporan', 'SuperAdmin\StockReportController::index');
-$routes->get('keuangan/cabang', 'SuperAdmin\KeuanganCabangController::index');
+    $routes->get('items/create', 'SuperAdmin\ItemController::create');
+    $routes->post('items/store', 'SuperAdmin\ItemController::store');
+    $routes->get('items/edit/(:num)', 'SuperAdmin\ItemController::edit/$1');
+    $routes->post('items/update/(:num)', 'SuperAdmin\ItemController::update/$1');
+    $routes->post('items/delete/(:num)', 'SuperAdmin\ItemController::delete/$1');
+    $routes->get('penjualan/laporan', 'SuperAdmin\SalesReportController::index');
+    $routes->get('stok/laporan', 'SuperAdmin\StockReportController::index');
+    $routes->get('keuangan/cabang', 'SuperAdmin\KeuanganCabangController::index');
 });

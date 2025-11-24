@@ -11,14 +11,14 @@
 <!-- Judul Utama & Breadcrumb -->
 <div class="mb-6">
     <h1 class="text-3xl font-bold text-gray-900">Daftar Barang</h1>
-    <nav class="text-sm text-gray-500 mt-2">
+    <nav class="text-sm text-gray-400 mt-1 border-b border-gray-300 pb-3 breadcrumb-border ">
         <span>Dashboard</span> > <span>Barang</span>
     </nav>
 </div>
 
 <!-- Bar Aksi -->
 <div class="flex flex-col md:flex-row justify-end items-center mb-6 gap-4">
-    <div class="flex space-x-2">
+    <div class="flex space-x-2">        
         <!-- Tambah Barang Button -->
         <a href="<?= base_url('superadmin/items/create') ?>" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -71,14 +71,15 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['kategori']) ?></td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp <?= number_format($item['harga'], 0, ',', '.') ?>/item</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['jumlah']) ?> Barang</td>
-<td class="px-6 py-4 whitespace-nowrap">
-    <div class="flex space-x-2 items-center">
-        <a href="<?= base_url('superadmin/items/edit/' . $item['id']) ?>" class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs hover:bg-blue-600">Edit</a>
-        <form class="inline-flex" action="<?= base_url('superadmin/items/delete/' . $item['id']) ?>" method="POST" onsubmit="return confirm('Yakin ingin menghapus barang ini?')">
-            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md text-xs hover:bg-red-600">Hapus</button>
-        </form>
-    </div>
-</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex space-x-2 items-center">
+                                <a href="<?= base_url('superadmin/items/edit/' . $item['id']) ?>" class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs hover:bg-blue-600">Edit</a>
+                        <form class="inline-flex" action="<?= base_url('superadmin/items/delete/' . $item['id']) ?>" method="POST" onsubmit="return confirm('Yakin ingin menghapus barang ini?')">
+                            <?= csrf_field() ?>
+                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md text-xs hover:bg-red-600">Hapus</button>
+                        </form>
+                            </div>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

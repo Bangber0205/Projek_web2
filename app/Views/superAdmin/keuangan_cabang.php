@@ -2,12 +2,12 @@
 
 <?= $this->section('content') ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl mx-auto">
 
     <!-- Title & Breadcrumb -->
     <div class="mb-6">
         <h1 class="text-3xl font-bold text-gray-900">Keuangan Cabang</h1>
-        <nav class="text-sm text-gray-400 mt-1" aria-label="Breadcrumb">
+        <nav class="text-sm text-gray-400 mt-1 border-b border-gray-300 pb-3" aria-label="Breadcrumb">
             <?php foreach ($breadcrumb as $label => $link) : 
                 if ($link): ?>
                     <a href="<?= esc($link) ?>" class="hover:underline"><?= esc($label) ?></a>

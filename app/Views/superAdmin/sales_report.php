@@ -6,7 +6,7 @@
 
     <div class="mb-6">
         <h1 class="text-3xl font-bold text-gray-900"><?= esc($title) ?></h1>
-        <nav class="text-sm text-gray-400 mt-1" aria-label="Breadcrumb">
+        <nav class="breadcrumb-border text-sm text-gray-400 mt-1 border-b border-gray-300 pb-3" aria-label="Breadcrumb">
             <?php foreach ($breadcrumb as $label => $link) : 
                 if ($link): ?>
                     <a href="<?= esc($link) ?>" class="hover:underline"><?= esc($label) ?></a>

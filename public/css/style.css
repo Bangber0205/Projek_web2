@@ -322,8 +322,15 @@ footer{
     flex-direction: column;
     gap: 15px;
 }
+
 .footer-content a{
     text-decoration: none;
     color: white;
+}
+
+.breadcrumb-border {
+    border-bottom: 1px solid #D1D5DB;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 

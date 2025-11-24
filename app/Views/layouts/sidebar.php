@@ -133,14 +133,6 @@
   </div>
   <span>Stok</span>
 </a>
-      <a href="#" class="flex items-center gap-3 py-2 font-medium text-sm <?= ($uri === 'superadmin/cabang' ? 'text-sidebar-active' : 'hover:bg-[#f6f6f6] text-text-third')?>">
-        <div class="w-6 h-6 flex justify-center items-center">
-          <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="3" cy="3" r="3" fill="#7E7E7E"/>
-          </svg>
-        </div>
-        <span>QC Cabang</span>
-      </a>
     </div>
   </div>
 
