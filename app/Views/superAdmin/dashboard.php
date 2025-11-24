@@ -2,13 +2,13 @@
 
 <?= $this->section('content') ?>
 
-<h1 class="text-3xl font-bold mt-3 mb-4 text-[#1F2937] font-inter">Dashboard</h1>
-
-<!-- line -->
-<div class="border-t-2 border-black/40 my-8"></div>
+<h1 class="text-3xl font-bold text-[#1F2937] font-inter">Dashboard</h1>
+    <nav class="text-sm text-gray-400 mt-1 border-b border-gray-300 pb-3">
+        <span>Dashboard</span>
+    </nav>
 
 <!-- statistik -->
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-4 gap-4 pt-5">
   <?= view('components/card-stats', [
       'title' => 'Total Cabang',
       'value' => $totalBranches ?? 0,

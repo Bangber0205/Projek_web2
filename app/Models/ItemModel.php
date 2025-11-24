@@ -6,11 +6,10 @@ use CodeIgniter\Model;
 
 class ItemModel extends Model
 {
-    protected $table = 'items';  // Assuming the table name is 'items'
+    protected $table = 'items'; 
     protected $primaryKey = 'id';
     protected $allowedFields = ['nama_barang', 'kode_barang', 'kategori', 'harga', 'jumlah'];
 
-    // Optionally, you can define validation rules here as well
     protected $validationRules = [
         'nama_barang' => 'required|max_length[255]',
         'kode_barang' => 'required|regex_match[/^[A-Z]{2,3}-\d+$/]|max_length[10]',

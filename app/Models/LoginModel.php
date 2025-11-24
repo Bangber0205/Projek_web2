@@ -24,11 +24,6 @@ class LoginModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
-    /**
-     * Stores a remember-me token for the user.
-     *
-     * @return mixed
-     */
     public function rememberUser(int $userID, string $selector, string $validator, string $expires)
     {
         $expires = new DateTime($expires);
@@ -41,11 +36,6 @@ class LoginModel extends Model
         ]);
     }
 
-    /**
-     * Returns the remember-me token info for a given selector.
-     *
-     * @return mixed
-     */
     public function getRememberToken(string $selector)
     {
         return $this->db->table('auth_tokens')
@@ -54,11 +44,6 @@ class LoginModel extends Model
             ->getRow();
     }
 
-    /**
-     * Updates the validator for a given selector.
-     *
-     * @return mixed
-     */
     public function updateRememberValidator(string $selector, string $validator)
     {
         return $this->db->table('auth_tokens')
@@ -69,21 +54,11 @@ class LoginModel extends Model
             ]);
     }
 
-    /**
-     * Removes all persistent login tokens (RememberMe) for a single user
-     * across all devices they may have logged in with.
-     *
-     * @return mixed
-     */
     public function purgeRememberTokens(int $id)
     {
         return $this->builder('auth_tokens')->where(['user_id' => $id])->delete();
     }
 
-    /**
-     * Purges the 'auth_tokens' table of any records that are past
-     * their expiration date already.
-     */
     public function purgeOldRememberTokens()
     {
         $config = config('Auth');

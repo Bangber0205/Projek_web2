@@ -4,7 +4,7 @@
 <!-- Judul Utama & Breadcrumb -->
 <div class="mb-6">
     <h1 class="text-3xl font-bold text-gray-900">Daftar User</h1>
-    <nav class="text-sm text-gray-500 mt-2 breadcrumb-border">
+    <nav class="text-sm text-gray-400 mt-1 border-b border-gray-300 pb-3">
         <span>Dashboard</span> > <span>Daftar User</span>
     </nav>
 </div>

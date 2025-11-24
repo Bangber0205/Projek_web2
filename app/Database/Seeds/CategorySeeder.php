@@ -49,3 +49,4 @@ class CategorySeeder extends Seeder
         $this->db->table('categories')->insertBatch($data);
     }
 }
+?>

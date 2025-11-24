@@ -4,7 +4,7 @@
 <!-- Judul Utama & Breadcrumb -->
 <div class="mb-6">
     <h1 class="text-3xl font-bold text-gray-900">Daftar Cabang</h1>
-    <nav class="text-sm text-gray-400 mt-2">
+    <nav class="text-sm text-gray-400 mt-1 border-b border-gray-300 pb-3">
         <span>Dashboard</span> > <span>Daftar Cabang</span>
     </nav>
 </div>

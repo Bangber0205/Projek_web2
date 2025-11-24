@@ -20,14 +20,12 @@ class CategoryModel extends Model
     protected array $casts = [];
     protected array $castHandlers = [];
 
-    // Dates
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
     protected $validationRules      = [
         'name' => 'required|min_length[2]|max_length[100]',
         'code' => 'required|min_length[2]|max_length[20]|is_unique[categories.code,id,{id}]',
@@ -54,53 +52,31 @@ class CategoryModel extends Model
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
-    // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
 
-    /**
-     * Get categories with item count
-     */
     public function getCategoriesWithItemCount()
     {
-        // Use Query Builder to select categories and count items per category by joining with items table
         $builder = $this->db->table('categories');
         $builder->select('categories.*, COUNT(items.id) AS item_count');
         $builder->join('items', 'items.kategori = categories.code', 'left');
         $builder->groupBy('categories.id');
         return $builder->get()->getResultArray();
     }
-
-    /**
-     * Recalculate and update total_stock for all categories
-     */
     public function recalculateTotalStock()
     {
-        // Calculate total stock grouped by category from the items table
         $itemTotals = $this->db->table('items')
             ->select('kategori, SUM(jumlah) as total_jumlah')
             ->groupBy('kategori')
             ->get()
             ->getResultArray();
 
-        // Prepare update data
         $categories = $this->findAll();
 
-        // Initialize total_stock to zero for all categories first
         foreach ($categories as $category) {
             $this->update($category['id'], ['total_stock' => 0]);
         }
 
-        // Update total_stock with recalculated sums
         foreach ($itemTotals as $itemTotal) {
-            // Find category by code
             $category = $this->where('code', $itemTotal['kategori'])->first();
             if ($category) {
                 $this->update($category['id'], ['total_stock' => $itemTotal['total_jumlah']]);
