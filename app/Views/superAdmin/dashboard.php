@@ -144,7 +144,4 @@
   </div>
 
 </div>
-
-<!-- the rest of the original file unchanged -->
-
 <?= $this->endSection() ?>

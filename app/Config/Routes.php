@@ -6,6 +6,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Pages::index');
+$routes->post('/', 'Pages::index');
+$routes->post('/feedback/save', 'Pages::save');
+$routes->match(['get', 'post'], '/', 'Pages::index');
 
 $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::attemptLogin');

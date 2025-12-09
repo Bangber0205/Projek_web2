@@ -21,20 +21,18 @@ class Dashboard extends BaseController
             ->first();
 
         $totalActiveProductsCount = $totalActiveProducts['total_stock'] ?? 0;
-
-        // Branch performance data array
         $branchPerformance = [
             [
                 'status' => 'aktif',
-                'color' => '#22C55E',          // green circle
+                'color' => '#22C55E',          
                 'title' => 'Cabang Jakarta Pusat',
-                'value' => '4.2M',             // sales today Rp 4.2M
+                'value' => '4.2M',             
                 'percentase' => '+15%',
                 'color_percentase' => 'text-green-500',
             ],
             [
                 'status' => 'aktif',
-                'color' => '#EAB308',          // yellow circle
+                'color' => '#EAB308',          
                 'title' => 'Cabang Surabaya',
                 'value' => '2.1M',
                 'percentase' => '-3%',
@@ -42,36 +40,34 @@ class Dashboard extends BaseController
             ],
             [
                 'status' => 'nonaktif',
-                'color' => '#EF4444',          // red circle
+                'color' => '#EF4444',         
                 'title' => 'Cabang Medan',
                 'value' => '',
                 'percentase' => '',
                 'color_percentase' => 'text-gray-500',
             ],
         ];
-
-        // Recent activities dummy data array
         $recentActivities = [
             [
-                'bg_icon' => 'bg-[#DBEAFE]',  // blue light
+                'bg_icon' => 'bg-[#DBEAFE]', 
                 'icon' => '🏢',
                 'title' => 'Cabang Jakarta Selatan ditambahkan',
                 'time' => '2 jam yang lalu',
             ],
             [
-                'bg_icon' => 'bg-[#DCFCE7]',  // green light
+                'bg_icon' => 'bg-[#DCFCE7]', 
                 'icon' => '👤',
                 'title' => 'Manager baru ditugaskan ke Cabang Bandung',
                 'time' => '4 jam yang lalu',
             ],
             [
-                'bg_icon' => 'bg-[#FEF9C3]',  // yellow light
+                'bg_icon' => 'bg-[#FEF9C3]', 
                 'icon' => '🏷️',
                 'title' => 'Kategori "Elektronik" diperbarui',
                 'time' => '6 jam yang lalu',
             ],
             [
-                'bg_icon' => 'bg-[#FEE2E2]',  // red light
+                'bg_icon' => 'bg-[#FEE2E2]',  
                 'icon' => '⚠️',
                 'title' => 'Stok rendah di Cabang Surabaya',
                 'time' => '1 hari yang lalu',

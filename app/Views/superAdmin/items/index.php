@@ -63,26 +63,26 @@
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-            <?php if (!empty($items) && is_array($items)): ?>
-                <?php foreach ($items as $item): ?>
-                    <tr class="bg-white hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium"><?= esc($item['kode_barang']) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['nama_barang']) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['kategori']) ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp <?= number_format($item['harga'], 0, ',', '.') ?>/item</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['jumlah']) ?> Barang</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex space-x-2 items-center">
-                                <a href="<?= base_url('superadmin/items/edit/' . $item['id']) ?>" class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs hover:bg-blue-600">Edit</a>
-                        <form class="inline-flex" action="<?= base_url('superadmin/items/delete/' . $item['id']) ?>" method="POST" onsubmit="return confirm('Yakin ingin menghapus barang ini?')">
-                            <?= csrf_field() ?>
-                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md text-xs hover:bg-red-600">Hapus</button>
-                        </form>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+                <?php if (!empty($items) && is_array($items)): ?>
+                    <?php foreach ($items as $item): ?>
+                        <tr class="bg-white hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium"><?= esc($item['kode_barang']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['nama_barang']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['kategori']) ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rp <?= number_format($item['harga'], 0, ',', '.') ?>/item</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= esc($item['jumlah']) ?> Barang</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex space-x-2 items-center">
+                                    <a href="<?= base_url('superadmin/items/edit/' . $item['id']) ?>" class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs hover:bg-blue-600">Edit</a>
+                                    <form class="inline-flex" action="<?= base_url('superadmin/items/delete/' . $item['id']) ?>" method="POST" onsubmit="return confirm('Yakin ingin menghapus barang ini?')">
+                                        <?= csrf_field() ?>
+                                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md text-xs hover:bg-red-600">Hapus</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center" colspan="6">Belum ada data barang.</td>
                 </tr>
@@ -92,7 +92,6 @@
 </div>
 
 <script>
-// Dropdown toggle
 document.getElementById('filterCategoryBtn').addEventListener('click', function() {
     const menu = document.getElementById('filterCategoryMenu');
     menu.classList.toggle('hidden');

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WarungKita | Kelola Usaha Anda</title>
-    <link rel="stylesheet" href="<?= base_url('css/style.css');?>"/>
+    <link rel="stylesheet" href="<?= base_url('css/style.css');?>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -160,30 +160,41 @@
             Punya pertanyaan atau ingin tahu lebih banyak tentang kami? Hubungi
             kami kapan saja.
           </p>
-          <div class="content-input">
+          <form method="post" class="content-input" action="<?= base_url('/feedback/save') ?>">
+            <?= csrf_field() ?>
             <div class="input-1">
               First Name
-              <input type="text" />
+              <input type="text" name="first_name" required />
             </div>
             <div class="input-2">
               Last Name
-              <input type="text" />
+              <input type="text" name="last_name" required />
             </div>
             <div class="input-3">
               Email *
-              <input type="text" />
+              <input type="email" name="email" required />
             </div>
             <div class="input-4">
               Subject
-              <input type="text" />
+              <input type="text" name="subject" required />
             </div>
             <div class="input-5">
               Message
               <figcaption>Write your message here!</figcaption>
-              <input type="text" />
+              <textarea name="message" rows="4" required></textarea>
             </div>
+            <button type="submit">Send Message</button>
+          </form>
+          <div class="feedback-list" style="margin-top: 30px;">
+            <h3>Kritik & Saran Terkini:</h3>
+            <?php foreach ($feedbacks ?? [] as $fb): ?>
+              <div style="border: 1px solid #eee; padding: 12px; margin: 12px 0; border-radius: 6px; background: #fafafa;">
+                <strong><?= esc($fb['first_name'] . ' ' . $fb['last_name']) ?></strong> — <?= esc($fb['subject']) ?><br>
+                <?= esc($fb['message']) ?><br>
+                <small style="color: #666;"><?= esc($fb['email']) ?> | <?= $fb['created_at'] ?></small>
+              </div>
+            <?php endforeach; ?>
           </div>
-          <a href="">Send Message</a>
         </div>
         <div class="contact-aside-container">
           <h2>Contact Information</h2>

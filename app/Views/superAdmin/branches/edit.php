@@ -88,13 +88,13 @@
         <!-- Tombol Aksi -->
         <div class="flex flex-col sm:flex-row gap-4">
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center justify-center">
-                <span class="mr-2">💾</span> Simpan Perubahan
+                <span class="mr-2"></span> Simpan Perubahan
             </button>
             <button type="button" onclick="document.querySelector('form').reset()" class="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-lg flex items-center justify-center hover:bg-gray-50">
-                <span class="mr-2">🔄</span> Reset Form
+                <span class="mr-2"></span> Reset Form
             </button>
             <a href="<?= base_url('superadmin/branches') ?>" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg flex items-center justify-center">
-                <span class="mr-2">⬅️</span> Kembali
+                <span class="mr-2"></span> Kembali
             </a>
         </div>
     </form>

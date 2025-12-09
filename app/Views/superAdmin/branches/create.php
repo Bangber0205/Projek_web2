@@ -55,7 +55,7 @@
                 <!-- Nomor Telepon -->
                 <div class="relative">
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">📞</span>
-<input type="text" name="contact" value="<?= old('contact') ?>" placeholder="Nomor telepon cabang" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" name="contact" value="<?= old('contact') ?>" placeholder="Nomor telepon cabang" class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <!-- Email -->
                 <div class="relative">

@@ -21,7 +21,11 @@
         <form action="<?= base_url('superadmin/users') ?>" method="GET" class="flex items-center gap-2">
             <input type="text" name="search" value="<?= esc($search ?? '') ?>" placeholder="Masukkan Kata Kunci ..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
-                <span class="mr-2">🔍</span> Cari
+                <span class="mr-2">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                    </svg>
+                </span> Cari
             </button>
         </form>
     </div>

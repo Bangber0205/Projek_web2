@@ -40,8 +40,6 @@ class ItemController extends BaseController
         }
 
         $this->itemModel->save($data);
-
-        // Add flash message for success
         session()->setFlashdata('success', 'Barang berhasil ditambahkan.');
 
         return redirect()->to('superadmin/items');

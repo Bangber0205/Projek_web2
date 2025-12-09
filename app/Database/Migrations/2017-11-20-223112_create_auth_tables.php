@@ -8,7 +8,6 @@ class CreateAuthTables extends Migration
 {
     public function up()
     {
-        // Users
         $this->forge->addField([
             'id'               => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'email'            => ['type' => 'varchar', 'constraint' => 255],
@@ -33,7 +32,6 @@ class CreateAuthTables extends Migration
 
         $this->forge->createTable('users', true);
 
-        // Auth Login Attempts
         $this->forge->addField([
             'id'         => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'ip_address' => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
@@ -45,13 +43,7 @@ class CreateAuthTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('email');
         $this->forge->addKey('user_id');
-        // NOTE: Do NOT delete the user_id or email when the user is deleted for security audits
         $this->forge->createTable('auth_logins', true);
-
-        /*
-         * Auth Tokens
-         * @see https://paragonie.com/blog/2015/04/secure-authentication-php-with-long-term-persistence
-         */
         $this->forge->addField([
             'id'              => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'selector'        => ['type' => 'varchar', 'constraint' => 255],
@@ -64,7 +56,6 @@ class CreateAuthTables extends Migration
         $this->forge->addForeignKey('user_id', 'users', 'id', '', 'CASCADE');
         $this->forge->createTable('auth_tokens', true);
 
-        // Password Reset Table
         $this->forge->addField([
             'id'         => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'email'      => ['type' => 'varchar', 'constraint' => 255],
@@ -76,7 +67,6 @@ class CreateAuthTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->createTable('auth_reset_attempts', true);
 
-        // Activation Attempts Table
         $this->forge->addField([
             'id'         => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'ip_address' => ['type' => 'varchar', 'constraint' => 255],
@@ -87,7 +77,6 @@ class CreateAuthTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->createTable('auth_activation_attempts', true);
 
-        // Groups Table
         $fields = [
             'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'name'        => ['type' => 'varchar', 'constraint' => 255],
@@ -98,7 +87,6 @@ class CreateAuthTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->createTable('auth_groups', true);
 
-        // Permissions Table
         $fields = [
             'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'name'        => ['type' => 'varchar', 'constraint' => 255],
@@ -109,7 +97,6 @@ class CreateAuthTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->createTable('auth_permissions', true);
 
-        // Groups/Permissions Table
         $fields = [
             'group_id'      => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'permission_id' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
@@ -121,7 +108,6 @@ class CreateAuthTables extends Migration
         $this->forge->addForeignKey('permission_id', 'auth_permissions', 'id', '', 'CASCADE');
         $this->forge->createTable('auth_groups_permissions', true);
 
-        // Users/Groups Table
         $fields = [
             'group_id' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'user_id'  => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
@@ -133,7 +119,6 @@ class CreateAuthTables extends Migration
         $this->forge->addForeignKey('user_id', 'users', 'id', '', 'CASCADE');
         $this->forge->createTable('auth_groups_users', true);
 
-        // Users/Permissions Table
         $fields = [
             'user_id'       => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
             'permission_id' => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'default' => 0],
@@ -146,12 +131,10 @@ class CreateAuthTables extends Migration
         $this->forge->createTable('auth_users_permissions', true);
     }
 
-    //--------------------------------------------------------------------
-
     public function down()
     {
-        // drop constraints first to prevent errors
-        if ($this->db->DBDriver !== 'SQLite3') { // @phpstan-ignore-line
+
+        if ($this->db->DBDriver !== 'SQLite3') { 
             $this->forge->dropForeignKey('auth_tokens', 'auth_tokens_user_id_foreign');
             $this->forge->dropForeignKey('auth_groups_permissions', 'auth_groups_permissions_group_id_foreign');
             $this->forge->dropForeignKey('auth_groups_permissions', 'auth_groups_permissions_permission_id_foreign');

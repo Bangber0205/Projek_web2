@@ -151,27 +151,22 @@
 
 <script>
 function toggleOptionsMenu(button) {
-    // Find the menu div relative to the button via parent node
     const menu = button.parentNode.querySelector('div[role="menu"]');
     if (!menu) {
         console.log('Dropdown menu not found');
         return;
     }
     const isHidden = menu.classList.contains('hidden');
-    // Close all other open menus
     document.querySelectorAll('div[role="menu"]').forEach(m => {
         if (m !== menu) {
             m.classList.add('hidden');
-            // Reset aria-expanded of other buttons
             const btn = m.parentNode.querySelector('button[aria-haspopup="true"]');
             if (btn) btn.setAttribute('aria-expanded', 'false');
         }
     });
     if (isHidden) {
-        // Remove hidden class to show menu
         menu.classList.remove('hidden');
         button.setAttribute('aria-expanded', 'true');
-        // Close menu when clicking outside
         const closeMenu = (event) => {
             if (!menu.contains(event.target) && event.target !== button) {
                 menu.classList.add('hidden');
@@ -179,10 +174,8 @@ function toggleOptionsMenu(button) {
                 document.removeEventListener('click', closeMenu);
             }
         };
-        // Use capture phase to handle before other click handlers
         document.addEventListener('click', closeMenu, true);
     } else {
-        // Add hidden class to hide menu
         menu.classList.add('hidden');
         button.setAttribute('aria-expanded', 'false');
     }

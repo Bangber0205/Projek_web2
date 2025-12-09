@@ -42,7 +42,6 @@
             </select>
         </div>
         <div class="flex space-x-2">
-            <!-- Removed top Detail Kategori button because it doesn't specify category ID -->
             <a href="<?= base_url('superadmin/categories/create') ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Tambah Kategori
             </a>
@@ -100,12 +99,12 @@
                                 <a href="<?= base_url('superadmin/categories/edit/' . $category['id']) ?>" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium text-xs">
                                     Edit
                                 </a>
-<form method="POST" action="<?= base_url('superadmin/categories/delete/' . $category['id']) ?>" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori <?= esc($category['name']) ?>?')">
-    <?= csrf_field() ?>
-    <button type="submit" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-xs">
-        Hapus
-    </button>
-</form>
+                            <form method="POST" action="<?= base_url('superadmin/categories/delete/' . $category['id']) ?>" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori <?= esc($category['name']) ?>?')">
+                                <?= csrf_field() ?>
+                                <button type="submit" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium text-xs">
+                                    Hapus
+                                </button>
+                            </form>
                             </div>
                         </td>
                     </tr>

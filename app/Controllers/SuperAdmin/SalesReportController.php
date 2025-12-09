@@ -8,7 +8,6 @@ class SalesReportController extends BaseController
 {
     public function index()
     {
-        // Sample data for demonstration
         $data = [
             'title' => 'Laporan Penjualan',
             'breadcrumb' => ['Dashboard' => base_url('superadmin/dashboard'), 'Penjualan' => ''],
@@ -23,7 +22,6 @@ class SalesReportController extends BaseController
                 ['nama' => 'Jakarta Pusat', 'kode' => 'JKT001', 'total' => 'Rp 3M', 'transaksi' => 4312, 'rata' => 'Rp 159K', 'growth' => '+15.2%'],
                 ['nama' => 'Jakarta Pusat', 'kode' => 'JKT001', 'total' => 'Rp 1.2M', 'transaksi' => 1123, 'rata' => 'Rp 159K', 'growth' => '-2.3%'],
             ],
-            // Branch options for filter dropdown
             'branch_options' => ['Jakarta Pusat', 'Surabaya', 'Bandung'],
         ];
 
