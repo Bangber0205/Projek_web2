@@ -47,3 +47,23 @@ $routes->group('superadmin', function($routes) {
     $routes->get('stok/laporan', 'SuperAdmin\StockReportController::index');
     $routes->get('keuangan/cabang', 'SuperAdmin\KeuanganCabangController::index');
 });
+
+// Owner
+$routes->group('owner', function($routes){
+    // dashboard
+    $routes->get('dashboard', 'Owner\Dashboard::index');
+    // riwayat transaksi
+    $routes->get('riwayat-transaksi', 'Owner\RiwayatTransaksi::index');
+    // stok barang
+    $routes->get('stok-barang', 'Owner\StokBarangController::index');
+    // stok barang - create
+    $routes->get('stok-barang/create', 'Owner\StokBarangController::create');
+    $routes->post('stok-barang/store', 'Owner\StokBarangController::store');
+    // stok barang - edit
+    $routes->get('stok-barang/edit/(:num)', 'Owner\StokBarangController::edit/$1');
+    $routes->post('stok-barang/update/(:num)', 'Owner\StokBarangController::update/$1');
+    // stok barang - hapus
+    $routes->get('stok-barang/delete/(:num)', 'Owner\StokBarangController::delete/$1');
+    // input penjualan
+    $routes->get('input-penjualan', 'Owner\InputPenjualanController::index');
+});
