@@ -18,7 +18,8 @@
 --
 -- Table structure for table `auth_activation_attempts`
 --
-
+CREATE DATABASE db_warungkita;
+USE db_warungkita;
 DROP TABLE IF EXISTS `auth_activation_attempts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
