@@ -160,7 +160,7 @@
             Punya pertanyaan atau ingin tahu lebih banyak tentang kami? Hubungi
             kami kapan saja.
           </p>
-          <form method="post" class="content-input" action="<?= base_url('/feedback/save') ?>">
+          <form method="POST" class="content-input" action="<?= base_url('/Feedbacks/save') ?>">
             <?= csrf_field() ?>
             <div class="input-1">
               First Name
@@ -186,14 +186,14 @@
             <button type="submit">Send Message</button>
           </form>
           <div class="feedback-list" style="margin-top: 30px;">
-            <h3>Kritik & Saran Terkini:</h3>
-            <?php foreach ($feedbacks ?? [] as $fb): ?>
-              <div style="border: 1px solid #eee; padding: 12px; margin: 12px 0; border-radius: 6px; background: #fafafa;">
-                <strong><?= esc($fb['first_name'] . ' ' . $fb['last_name']) ?></strong> — <?= esc($fb['subject']) ?><br>
-                <?= esc($fb['message']) ?><br>
-                <small style="color: #666;"><?= esc($fb['email']) ?> | <?= $fb['created_at'] ?></small>
-              </div>
-            <?php endforeach; ?>
+              <h3>Kritik & Saran Terkini:</h3>
+              <?php foreach ($feedbacks ?? [] as $fb): ?>
+                <div style="border: 1px solid #eee; padding: 12px; margin: 12px 0; border-radius: 6px; background: #fafafa;">
+                  <strong><?= esc($fb['first_name'] . ' ' . $fb['last_name']) ?></strong> — <?= esc($fb['subject']) ?><br>
+                  <?= esc($fb['message']) ?><br>
+                  <small style="color: #666;"><?= esc($fb['email']) ?></small>
+                </div>
+              <?php endforeach; ?>
           </div>
         </div>
         <div class="contact-aside-container">

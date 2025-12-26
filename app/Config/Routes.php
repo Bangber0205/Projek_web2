@@ -5,10 +5,9 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Pages::index');
-$routes->post('/', 'Pages::index');
-$routes->post('/feedback/save', 'Pages::save');
-$routes->match(['get', 'post'], '/', 'Pages::index');
+$routes->get('/', 'Feedbacks::index');
+$routes->post('/', 'Feedbacks::index');
+$routes->post('/Feedbacks/save', 'Feedbacks::save');
 
 $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::attemptLogin');
@@ -50,20 +49,13 @@ $routes->group('superadmin', function($routes) {
 
 // Owner
 $routes->group('owner', function($routes){
-    // dashboard
     $routes->get('dashboard', 'Owner\Dashboard::index');
-    // riwayat transaksi
     $routes->get('riwayat-transaksi', 'Owner\RiwayatTransaksi::index');
-    // stok barang
     $routes->get('stok-barang', 'Owner\StokBarangController::index');
-    // stok barang - create
     $routes->get('stok-barang/create', 'Owner\StokBarangController::create');
     $routes->post('stok-barang/store', 'Owner\StokBarangController::store');
-    // stok barang - edit
     $routes->get('stok-barang/edit/(:num)', 'Owner\StokBarangController::edit/$1');
     $routes->post('stok-barang/update/(:num)', 'Owner\StokBarangController::update/$1');
-    // stok barang - hapus
     $routes->get('stok-barang/delete/(:num)', 'Owner\StokBarangController::delete/$1');
-    // input penjualan
     $routes->get('input-penjualan', 'Owner\InputPenjualanController::index');
 });

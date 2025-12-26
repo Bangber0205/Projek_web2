@@ -34,10 +34,6 @@ class CreateFeedbacksTable extends Migration
             'message' => [
                 'type' => 'TEXT',
             ],
-            'created_at' => [
-                'type' => 'DATETIME',
-                'null' => true,
-            ],
         ]);
 
         $this->forge->addKey('id', true);
