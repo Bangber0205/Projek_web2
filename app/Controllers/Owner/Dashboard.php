@@ -8,26 +8,27 @@ class Dashboard extends BaseController
 {
     public function index()
     {
-        $aktivitasTerbaru = [
-            [
-                'title'    => '#KFM102',
-                'subtitle' => '14:25 - Kopi Arabica x2',
-                'price'    => 'Rp 64.000',
-            ],
-            [
-                'title'    => '#THJ210',
-                'subtitle' => '14:32 - Teh Jasmine x1',
-                'price'    => 'Rp 18.000',
-            ],
-            [
-                'title'    => '#KSB089',
-                'subtitle' => '15:12 - Keripik Singkong x1',
-                'price'    => 'Rp 12.000',
-            ],
-        ];
+        $transaksi = session()->get('transaksi') ?? [];
+
+        $totalTransaksi = count($transaksi);
+
+        $transaksi = array_reverse($transaksi);
+
+        $aktivitasTerbaru = array_slice($transaksi, 0, 3);
+
+        $aktivitasTerbaru = array_map(function ($t) {
+            return [
+                'title'    => '#' . ($t['kode_barang'] ?? '-'),
+                'subtitle' => ($t['jam'] ?? '00:00') 
+                            . ' - ' . $t['nama_barang'] 
+                            . ' x' . $t['jumlah'],
+                'price'    => 'Rp ' . number_format($t['total'], 0, ',', '.'),
+            ];
+        }, $aktivitasTerbaru);
 
         return view('owner/dashboard', [
-            'aktivitasTerbaru' => $aktivitasTerbaru
+            'totalTransaksi'   => $totalTransaksi,
+            'aktivitasTerbaru' => $aktivitasTerbaru,
         ]);
     }
 }

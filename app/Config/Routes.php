@@ -58,4 +58,9 @@ $routes->group('owner', function($routes){
     $routes->post('stok-barang/update/(:num)', 'Owner\StokBarangController::update/$1');
     $routes->get('stok-barang/delete/(:num)', 'Owner\StokBarangController::delete/$1');
     $routes->get('input-penjualan', 'Owner\InputPenjualanController::index');
+    $routes->post('input-penjualan/add', 'Owner\InputPenjualanController::addToCart');
+    $routes->post('input-penjualan/remove', 'Owner\InputPenjualanController::removeFromCart');
+    $routes->post('input-penjualan/remove', 'Owner\InputPenjualanController::removeFromCart');
+    $routes->post('input-penjualan/clear', 'Owner\InputPenjualanController::clearCart');
+    $routes->post('input-penjualan/save', 'Owner\InputPenjualanController::save');
 });

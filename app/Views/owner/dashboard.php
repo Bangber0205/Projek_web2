@@ -20,7 +20,7 @@
 
     <?= view('components/card-stats', [
         'title' => 'Total Transaksi',
-        'value' => '10',
+        'value' => $totalTransaksi,
         'bg_icon' => 'bg-[#DCFCE7]',
         'icon' => '
             <svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +81,6 @@
         <!-- grafik penjualan mingguan -->
         <div class="bg-white border border-gray-200 shadow-sm rounded-lg p-6 flex flex-col">
             <h2 class="pl-2 text-lg font-bold text-[#1F2937]">Grafik Penjualan Mingguan</h2>
-
             <div class="bg-[#F3F4F6] mt-4 w-full h-60 rounded-lg flex items-center justify-center"></div>
         </div>
 
@@ -89,7 +88,7 @@
         <div class="bg-white border border-gray-200 shadow-sm rounded-lg p-6 flex flex-col">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="pl-4 text-lg font-bold text-[#1F2937]">Transaksi Terbaru</h2>
-                <a href="#" class="text-[#3B82F6] text-sm hover:underline">Lihat Semua</a>
+                <a href="<?= base_url('owner/riwayat-transaksi') ?>" class="text-[#3B82F6] text-sm hover:underline">Lihat Semua</a>
             </div>
             
             <div class="flex flex-col gap-3">
@@ -104,8 +103,6 @@
         </div>
 
     </div>
-
-
 </div>
 
 <?= $this->endSection() ?>

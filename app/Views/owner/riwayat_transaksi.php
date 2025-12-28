@@ -14,7 +14,7 @@
 <div class="grid grid-cols-3 gap-4">
     <?= view('components/card-stats', [
         'title' => 'Total Transaksi Hari Ini',
-        'value' => 'Rp 2.4 JT',
+        'value' => rupiah($totalHariIni),
         'bg_icon' => 'bg-[#DBEAFE]',
         'icon' => '
             <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@
 
     <?= view('components/card-stats', [
         'title' => 'Jumlah Transaksi',
-        'value' => '140',
+        'value' => $totalTransaksi,
         'bg_icon' => 'bg-[#DCFCE7]',
         'icon' => '
             <svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@
 
     <?= view('components/card-stats', [
         'title' => 'Rata-rata Transaksi',
-        'value' => 'Rp 1 JT',
+        'value' => rupiah($rataRata),
         'bg_icon' => 'bg-[#FEF9C3]',
         'icon' => '
             <svg width="19" height="25" viewBox="0 0 19 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +119,7 @@
                             </td>
 
                             <!-- tanggal -->
-                            <td class="py-4 px-4 text-gray-800">
+                            <td class="py-4 px-9 text-gray-800">
                                 <?= date('d/m/Y', strtotime($t['tanggal'])) ?>
                             </td>
                         </tr>
