@@ -152,8 +152,8 @@ php spark db:seed UserSeeder
 Seeder ini akan:
 - Membuat 2 groups: `superadmin` dan `owner`
 - Membuat 2 users dengan credentials berikut:
-  - **SuperAdmin**: `superadmin@warungkita.com` / `admin123`
-  - **Owner**: `owner@warungkita.com` / `owner123`
+  - **SuperAdmin**: `superadmin@warungkita.com` / `sukaadmin543`
+  - **Owner**: `owner@warungkita.com` / `sukaowner543`
 
 #### Opsi 2: Setup Manual
 
@@ -194,12 +194,12 @@ Setelah menjalankan seeder, gunakan credentials berikut:
 
 ### SuperAdmin
 - **Email**: `superadmin@warungkita.com`
-- **Password**: `admin123`
+- **Password**: `sukaadmin543`
 - **Akses**: Full access ke semua fitur
 
 ### Owner
 - **Email**: `owner@warungkita.com`
-- **Password**: `owner123`
+- **Password**: `sukaowner543`
 - **Akses**: Manajemen cabang terbatas
 
 ---
