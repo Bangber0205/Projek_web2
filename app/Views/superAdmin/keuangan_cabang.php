@@ -55,7 +55,7 @@
 
     <!-- Filter Form -->
     <section class="bg-white rounded-lg shadow p-6 mb-8">
-        <form action="" method="GET" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6">
+        <form action="<?= base_url('superadmin/keuangan/cabang') ?>" method="GET" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6">
             <div class="flex-1">
                 <label for="cabangs" class="block text-gray-700 mb-1 font-semibold">Cabang</label>
                 <div class="relative">
@@ -82,17 +82,10 @@
                     <div class="pointer-events-none absolute top-3 right-3 text-gray-400 select-none">📅</div>
                 </div>
             </div>
-            <div class="flex-1">
-                <label for="jenis_laporan" class="block text-gray-700 mb-1 font-semibold">Jenis Laporan</label>
-                <div class="relative">
-                    <select id="jenis_laporan" name="jenis_laporan" class="w-full border border-gray-300 rounded-md p-2.5 appearance-none text-gray-500 placeholder-gray-300">
-                        <option value="" disabled selected>Pilih Laporan</option>
-                        <?php foreach ($jenis_laporan_options as $option): ?>
-                            <option value="<?= esc($option) ?>"><?= esc($option) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <div class="pointer-events-none absolute top-3 right-3 text-gray-400 select-none">▼</div>
-                </div>
+            <div class="flex-shrink-0 self-end">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-md transition duration-200">
+                    Filter
+                </button>
             </div>
         </form>
     </section>

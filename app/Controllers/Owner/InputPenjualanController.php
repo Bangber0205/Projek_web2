@@ -37,8 +37,7 @@ class InputPenjualanController extends BaseController
         }
 
         return view('owner/input_penjualan', [
-            'stok' => $stok,
-            'keyword' => $keyword
+            'title_page' => 'Input Penjualan'
         ]);
     }
 

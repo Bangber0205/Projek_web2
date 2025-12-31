@@ -4,15 +4,18 @@ namespace App\Controllers\SuperAdmin;
 
 use App\Controllers\BaseController;
 use App\Models\CategoryModel;
+use App\Models\NotificationModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class CategoryController extends BaseController
 {
     protected $categoryModel;
+    protected $notificationModel;
 
     public function __construct()
     {
         $this->categoryModel = new CategoryModel();
+        $this->notificationModel = new NotificationModel();
     }
 
     public function index()
@@ -58,6 +61,13 @@ class CategoryController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->categoryModel->errors());
         }
 
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Kategori Baru Ditambahkan',
+            'message' => "Kategori '{$data['name']}' telah berhasil ditambahkan.",
+            'type' => 'success'
+        ]);
+
         return redirect()->to('superadmin/categories')->with('message', 'Kategori berhasil ditambahkan');
     }
 
@@ -101,12 +111,27 @@ class CategoryController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->categoryModel->errors());
         }
 
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Kategori Diperbarui',
+            'message' => "Kategori '{$data['name']}' telah berhasil diperbarui.",
+            'type' => 'info'
+        ]);
+
         return redirect()->to('superadmin/categories')->with('message', 'Kategori berhasil diperbarui');
     }
 
     public function delete($id)
     {
+        $category = $this->categoryModel->find($id);
         if ($this->categoryModel->delete($id)) {
+            // Log notification
+            $this->notificationModel->createNotification([
+                'title' => 'Kategori Dihapus',
+                'message' => "Kategori '{$category['name']}' telah berhasil dihapus.",
+                'type' => 'warning'
+            ]);
+
             return redirect()->to('superadmin/categories')->with('message', 'Kategori berhasil dihapus');
         }
 

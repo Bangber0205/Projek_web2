@@ -45,6 +45,27 @@
         <p class="text-xs text-gray-400 mt-1">Contoh: Pasta gigi, Sikat gigi, Mie instan</p>
     </div>
 
+    <!-- Kategori -->
+    <div class="flex flex-col">
+        <label for="kategori" class="mb-2 font-semibold text-gray-900">
+            Kategori <span class="text-red-600">*</span>
+        </label>
+        <select id="kategori" name="kategori" required
+            class="w-full border border-gray-300 rounded-md px-4 py-3 placeholder-gray-400 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="">Pilih Kategori</option>
+            <?php if (!empty($categories)): ?>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= esc($category['code']) ?>" data-code="<?= esc($category['code']) ?>" <?= old('kategori') == $category['code'] ? 'selected' : '' ?>>
+                        <?= esc($category['name']) ?> (<?= esc($category['code']) ?>)
+                    </option>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <option value="" disabled>Tidak ada kategori tersedia. Silakan tambah kategori terlebih dahulu.</option>
+            <?php endif; ?>
+        </select>
+        <p class="text-xs text-gray-400 mt-1">Pilih kategori yang sudah ada. Jika belum ada kategori, tambahkan kategori terlebih dahulu.</p>
+    </div>
+
     <!-- Kode Barang -->
     <div class="flex flex-col">
         <label for="kode_barang" class="mb-2 font-semibold text-gray-900">
@@ -54,16 +75,6 @@
             value="<?= old('kode_barang') ?>"
             class="w-full border border-gray-300 rounded-md px-4 py-3 placeholder-gray-400 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
         <p class="text-xs text-gray-400 mt-1">(Terdiri dari 2-3 huruf dan diakhiri dengan angka, contoh : SBK-1)</p>
-    </div>
-
-    <!-- Kategori -->
-    <div class="flex flex-col">
-        <label for="kategori" class="mb-2 font-semibold text-gray-900">
-            Kategori <span class="text-red-600">*</span>
-        </label>
-        <input type="text" id="kategori" name="kategori" placeholder="Masukkan nama kategori" required
-            value="<?= old('kategori') ?>"
-            class="w-full border border-gray-300 rounded-md px-4 py-3 placeholder-gray-400 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"/>
     </div>
 
     <!-- Harga per item -->
@@ -98,5 +109,20 @@
         </button>
     </div>
 </form>
+
+<script>
+document.getElementById('kategori').addEventListener('change', function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const categoryCode = selectedOption.getAttribute('data-code');
+    const kodeBarangInput = document.getElementById('kode_barang');
+    
+    if (categoryCode) {
+        kodeBarangInput.value = categoryCode + '-';
+        // Set cursor at the end
+        kodeBarangInput.focus();
+        kodeBarangInput.setSelectionRange(kodeBarangInput.value.length, kodeBarangInput.value.length);
+    }
+});
+</script>
 
 <?= $this->endSection() ?>

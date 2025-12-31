@@ -30,7 +30,7 @@
         <!-- Pilih Kategori Dropdown -->
         <div class="relative inline-block text-left">
             <button type="button" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500" id="filterCategoryBtn" aria-haspopup="true" aria-expanded="true">
-                Pilih Kategori
+                Semua Kategori
                 <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
@@ -38,11 +38,12 @@
             <!-- Dropdown menu, show/hide with JavaScript -->
             <div id="filterCategoryMenu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="filterCategoryBtn" tabindex="-1">
                 <div class="py-1" role="none">
-                    <!-- Example categories, replace with dynamic -->
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">Sembako</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">Frozen Food</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">Snack</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">Perleng. Rumah</a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" data-category="all">Semua Kategori</a>
+                    <?php if (!empty($categories) && is_array($categories)): ?>
+                        <?php foreach ($categories as $category): ?>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" data-category="<?= esc($category['code']) ?>"><?= esc($category['name']) ?></a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -95,6 +96,31 @@
 document.getElementById('filterCategoryBtn').addEventListener('click', function() {
     const menu = document.getElementById('filterCategoryMenu');
     menu.classList.toggle('hidden');
+});
+
+// Handle category selection
+document.querySelectorAll('#filterCategoryMenu a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const selectedCategory = this.getAttribute('data-category');
+        const buttonText = this.textContent;
+        document.getElementById('filterCategoryBtn').innerHTML = buttonText + ' <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>';
+        document.getElementById('filterCategoryMenu').classList.add('hidden');
+
+        // Filter table rows
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(function(row) {
+            const categoryCell = row.querySelector('td:nth-child(3)');
+            if (categoryCell) {
+                const category = categoryCell.textContent.trim();
+                if (selectedCategory === 'all' || category === selectedCategory) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
 });
 </script>
 

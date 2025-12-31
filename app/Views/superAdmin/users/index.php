@@ -20,6 +20,12 @@
     <div class="flex items-center gap-2">
         <form action="<?= base_url('superadmin/users') ?>" method="GET" class="flex items-center gap-2">
             <input type="text" name="search" value="<?= esc($search ?? '') ?>" placeholder="Masukkan Kata Kunci ..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select name="role" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Semua Role</option>
+                <?php foreach ($groups as $group): ?>
+                    <option value="<?= esc($group->name) ?>" <?= ($role ?? '') === $group->name ? 'selected' : '' ?>><?= esc($group->name) ?></option>
+                <?php endforeach; ?>
+            </select>
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
                 <span class="mr-2">
                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">

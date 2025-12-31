@@ -45,12 +45,24 @@
     ]) ?>
 </div>
 
-<!-- btn -->
-    <div class="flex space-x-2">
-        <a href="<?= base_url('owner/stok-barang/create') ?>" class="inline-flex ml-auto items-center mt-6 px-4 py-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            + Tambah Kategori
-        </a>
-    </div>
+<!-- search form -->
+<div class="flex items-center space-x-4 mt-6">
+    <form method="GET" action="<?= base_url('owner/stok-barang') ?>" class="flex items-center space-x-2">
+        <input type="text" name="search" value="<?= esc($search_keyword ?? '') ?>" placeholder="Cari berdasarkan kode, nama, atau kategori..." class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+            Cari
+        </button>
+        <?php if (!empty($search_keyword)): ?>
+            <a href="<?= base_url('owner/stok-barang') ?>" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                Reset
+            </a>
+        <?php endif; ?>
+    </form>
+
+    <a href="<?= base_url('owner/stok-barang/create') ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        + Tambah Barang
+    </a>
+</div>
 
 <!-- tabel -->
     <div class="overflow-x-auto mt-6 shadow-md">

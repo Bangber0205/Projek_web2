@@ -3,11 +3,76 @@
 namespace App\Controllers\SuperAdmin;
 
 use App\Controllers\BaseController;
+use App\Models\BranchModel;
 
 class KeuanganCabangController extends BaseController
 {
     public function index()
     {
+        $cabang = $this->request->getGet('cabang');
+        $dariTanggal = $this->request->getGet('dari_tanggal');
+        $sampaiTanggal = $this->request->getGet('sampai_tanggal');
+
+        // Get actual branch data from database
+        $branchModel = new BranchModel();
+        $branches = $branchModel->findAll();
+
+        // Create branch options for filter dropdown
+        $branch_options = array_column($branches, 'name');
+
+        // Generate reports based on actual branches from database
+        $reports = [];
+
+        if (!empty($branches)) {
+            foreach ($branches as $branch) {
+                // Generate 3 entries for different dates but with zero values since no transactions exist
+                for ($i = 0; $i < 3; $i++) {
+                    $date = date('Y-m-d', strtotime("-$i days"));
+                    $reports[] = [
+                        'cabang' => $branch['name'],
+                        'tanggal' => $date,
+                        'total_penjualan' => 'Rp 0', // Since no sales data exists, set to 0
+                        'total_modal' => 'Rp 0', // Since no sales data exists, modal is also 0
+                        'total_keuntungan' => 'Rp 0', // Since no sales data exists, profit is also 0
+                        'jumlah_transaksi' => 0, // Since no sales data exists, transactions are also 0
+                    ];
+                }
+            }
+        }
+
+        // Apply filters
+        $filteredReports = $reports;
+
+        if ($cabang) {
+            $filteredReports = array_filter($filteredReports, function($report) use ($cabang) {
+                return $report['cabang'] === $cabang;
+            });
+        }
+
+        if ($dariTanggal) {
+            $filteredReports = array_filter($filteredReports, function($report) use ($dariTanggal) {
+                return $report['tanggal'] >= $dariTanggal;
+            });
+        }
+
+        if ($sampaiTanggal) {
+            $filteredReports = array_filter($filteredReports, function($report) use ($sampaiTanggal) {
+                return $report['tanggal'] <= $sampaiTanggal;
+            });
+        }
+
+        $total_penjualan = 0;
+        $total_keuntungan = 0;
+        $total_transaksi = 0;
+
+        foreach ($filteredReports as $report) {
+            $total_penjualan += (int)str_replace(['Rp ', '.'], '', $report['total_penjualan']);
+            $total_keuntungan += (int)str_replace(['Rp ', '.'], '', $report['total_keuntungan']);
+            $total_transaksi += $report['jumlah_transaksi'];
+        }
+
+        $rata_rata_penjualan = $total_transaksi > 0 ? $total_penjualan / $total_transaksi : 0;
+
         $data = [
             'title' => 'Keuangan Cabang',
             'breadcrumb' => [
@@ -15,37 +80,16 @@ class KeuanganCabangController extends BaseController
                 'Laporan Keuangan Cabang' => '',
             ],
             'stats' => [
-                'total_penjualan' => 'Rp 120.500.000',
-                'total_keuntungan' => 'Rp 85.237.000',
-                'rata_rata_penjualan' => 'Rp 70.000.000',
+                'total_penjualan' => 'Rp ' . number_format($total_penjualan, 0, ',', '.'),
+                'total_keuntungan' => 'Rp ' . number_format($total_keuntungan, 0, ',', '.'),
+                'rata_rata_penjualan' => 'Rp ' . number_format($rata_rata_penjualan, 0, ',', '.'),
             ],
-            'branch_options' => ['Cabang 1', 'Cabang 2', 'Cabang 3'],
-            'jenis_laporan_options' => ['Harian', 'Mingguan', 'Bulanan', 'Custom'],
-            'reports' => [
-                [
-                    'cabang' => 'Cabang 1',
-                    'tanggal' => '2025-09-25',
-                    'total_penjualan' => 'Rp 100.000.000',
-                    'total_modal' => 'Rp 60.000.000',
-                    'total_keuntungan' => 'Rp 40.000.000',
-                    'jumlah_transaksi' => 120,
-                ],
-                [
-                    'cabang' => 'Cabang 2',
-                    'tanggal' => '2025-09-25',
-                    'total_penjualan' => 'Rp 150.000.000',
-                    'total_modal' => 'Rp 100.000.000',
-                    'total_keuntungan' => 'Rp 50.000.000',
-                    'jumlah_transaksi' => 180,
-                ],
-                [
-                    'cabang' => 'Cabang 3',
-                    'tanggal' => '2025-09-25',
-                    'total_penjualan' => 'Rp 80.000.000',
-                    'total_modal' => 'Rp 50.000.000',
-                    'total_keuntungan' => 'Rp 30.000.000',
-                    'jumlah_transaksi' => 90,
-                ],
+            'branch_options' => $branch_options,
+            'reports' => array_values($filteredReports),
+            'filters' => [
+                'cabang' => $cabang,
+                'dari_tanggal' => $dariTanggal,
+                'sampai_tanggal' => $sampaiTanggal,
             ],
         ];
 
