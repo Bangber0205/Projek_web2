@@ -46,10 +46,25 @@ class AuthController extends Controller
         // No need to show a login form if the user
         // is already logged in.
         if ($this->auth->check()) {
-            $redirectURL = session('redirect_url') ?? site_url('superadmin/dashboard');
-            unset($_SESSION['redirect_url']);
-
-            return redirect()->to($redirectURL);
+            // Cek apakah ada redirect_url di session
+            if (session('redirect_url')) {
+                $redirectURL = session('redirect_url');
+                unset($_SESSION['redirect_url']);
+                return redirect()->to($redirectURL);
+            }
+            
+            // Redirect berdasarkan group user
+            $authorize = service('authorization');
+            $userId = $this->auth->id();
+            
+            if ($authorize->inGroup('superadmin', $userId)) {
+                return redirect()->to(site_url('superadmin/dashboard'));
+            } elseif ($authorize->inGroup('owner', $userId)) {
+                return redirect()->to(site_url('owner/dashboard'));
+            }
+            
+            // Default ke homepage jika tidak punya group
+            return redirect()->to(site_url('/'));
         }
 
         // Set a return URL if none is specified
@@ -96,10 +111,26 @@ class AuthController extends Controller
             return redirect()->to(route_to('reset-password') . '?token=' . $this->auth->user()->reset_hash)->withCookies();
         }
 
-        // setelah login ke dashboard
-        return redirect()->to(site_url('superadmin/dashboard'))
+        // Cek group user untuk redirect yang sesuai
+        $authorize = service('authorization');
+        $userId = $this->auth->id();
+        
+        // Redirect berdasarkan role
+        if ($authorize->inGroup('superadmin', $userId)) {
+            return redirect()->to(site_url('superadmin/dashboard'))
+                ->withCookies()
+                ->with('message', lang('Auth.loginSuccess'));
+        } elseif ($authorize->inGroup('owner', $userId)) {
+            return redirect()->to(site_url('owner/dashboard'))
+                ->withCookies()
+                ->with('message', lang('Auth.loginSuccess'));
+        }
+        
+        // Default redirect jika tidak ada group
+        return redirect()->to(site_url('/'))
             ->withCookies()
-            ->with('message', lang('Auth.loginSuccess'));        
+            ->with('message', lang('Auth.loginSuccess'));
+        
     }
 
     /**

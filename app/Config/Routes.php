@@ -15,7 +15,7 @@ $routes->get('register', 'AuthController::register');
 $routes->post('register', 'AuthController::attemptRegister');
 $routes->get('logout', 'AuthController::logout');
 
-$routes->group('superadmin', function($routes) {
+$routes->group('superadmin', ['filter' => 'role:superadmin'], function($routes) {
     $routes->get('dashboard', 'SuperAdmin\Dashboard::index');
     $routes->get('users', 'SuperAdmin\UserController::index');
     $routes->get('users/create', 'SuperAdmin\UserController::create');
@@ -48,7 +48,7 @@ $routes->group('superadmin', function($routes) {
 });
 
 // Owner
-$routes->group('owner', function($routes){
+$routes->group('owner', ['filter' => 'role:owner'], function($routes){
     $routes->get('dashboard', 'Owner\Dashboard::index');
     $routes->get('riwayat-transaksi', 'Owner\RiwayatTransaksi::index');
     $routes->get('stok-barang', 'Owner\StokBarangController::index');

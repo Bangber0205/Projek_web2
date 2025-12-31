@@ -6,9 +6,8 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Myth\Auth\Exceptions\PermissionException;
 
-class RoleFilter extends BaseFilter implements FilterInterface
+class RoleFilter implements FilterInterface
 {
     /**
      * @param array|null $arguments
@@ -17,32 +16,30 @@ class RoleFilter extends BaseFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        $authenticate = service('authentication');
+        $authorize = service('authorization');
+        
         // If no user is logged in then send them to the login form.
-        if (! $this->authenticate->check()) {
+        if (!$authenticate->check()) {
             session()->set('redirect_url', current_url());
-
-            return redirect($this->reservedRoutes['login']);
+            return redirect()->to('/login');
         }
 
         if (empty($arguments)) {
             return;
         }
 
-        // Check each requested permission
+        $userId = $authenticate->id();
+        
+        // Check each requested group
         foreach ($arguments as $group) {
-            if ($this->authorize->inGroup($group, $this->authenticate->id())) {
+            if ($authorize->inGroup($group, $userId)) {
                 return;
             }
         }
 
-        if ($this->authenticate->silent()) {
-            $redirectURL = session('redirect_url') ?? route_to($this->landingRoute);
-            unset($_SESSION['redirect_url']);
-
-            return redirect()->to($redirectURL)->with('error', lang('Auth.notEnoughPrivilege'));
-        }
-
-        throw new PermissionException(lang('Auth.notEnoughPrivilege'));
+        // User doesn't have required role
+        return redirect()->to('/')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 
     /**
@@ -57,5 +54,6 @@ class RoleFilter extends BaseFilter implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        // Do nothing
     }
 }

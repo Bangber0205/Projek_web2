@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/main') ?>
+<?= $this->extend('layouts/owner') ?>
 <?= $this->section('content') ?>
 
 <h1 class="text-3xl font-bold mt-3 mb-4 text-[#1F2937] font-inter">Dashboard</h1>
