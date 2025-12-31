@@ -34,14 +34,14 @@ class UserSeeder extends Seeder
             [
                 'email'         => 'superadmin@warungkita.com',
                 'username'      => 'superadmin',
-                'password'      => 'admin123',
+                'password'      => 'sukaadmin543',
                 'group_id'      => $superadminGroup->id,
                 'group_name'    => 'superadmin'
             ],
             [
                 'email'         => 'owner@warungkita.com',
                 'username'      => 'owner',
-                'password'      => 'owner123',
+                'password'      => 'sukaowner543',
                 'group_id'      => $ownerGroup->id,
                 'group_name'    => 'owner'
             ]
@@ -75,17 +75,26 @@ class UserSeeder extends Seeder
                 continue;
             }
 
-            // Buat user baru
+            // Buat user baru - gunakan EXACT SAME METHOD dengan Myth:Auth
+            // Myth:Auth melakukan: base64_encode(hash('sha384', $password, true)) sebelum bcrypt
+            $preparedPassword = base64_encode(hash('sha384', $userData['password'], true));
+            $hashedPassword = password_hash($preparedPassword, PASSWORD_DEFAULT);
+            
             $this->db->table('users')->insert([
                 'email'         => $userData['email'],
                 'username'      => $userData['username'],
-                'password_hash' => password_hash($userData['password'], PASSWORD_DEFAULT),
+                'password_hash' => $hashedPassword,
                 'active'        => 1,
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s')
             ]);
 
             $userId = $this->db->insertID();
+
+            if (!$userId) {
+                echo "✗ Failed to create user {$userData['email']}\n";
+                continue;
+            }
 
             // Assign ke group
             $this->db->table('auth_groups_users')->insert([
@@ -103,10 +112,10 @@ class UserSeeder extends Seeder
         echo "─────────────────────────────────────────\n";
         echo "SuperAdmin:\n";
         echo "  Email: superadmin@warungkita.com\n";
-        echo "  Password: admin123\n\n";
+        echo "  Password: sukaadmin543\n\n";
         echo "Owner:\n";
         echo "  Email: owner@warungkita.com\n";
-        echo "  Password: owner123\n";
+        echo "  Password: sukaowner543\n";
         echo "─────────────────────────────────────────\n";
     }
 }
