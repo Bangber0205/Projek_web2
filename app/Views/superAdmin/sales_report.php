@@ -56,14 +56,14 @@
     </div>
 
     <section class="bg-white rounded-lg shadow p-6 mb-8">
-        <form action="" method="GET" class="flex flex-col sm:flex-row sm:items-end sm:space-x-6 space-y-4 sm:space-y-0">
+        <form action="<?= base_url('superadmin/penjualan/laporan') ?>" method="GET" class="flex flex-col sm:flex-row sm:items-end sm:space-x-6 space-y-4 sm:space-y-0">
             <div class="flex-1">
                 <label for="cabang" class="block text-gray-700 mb-1 font-semibold">Cabang</label>
                 <div class="relative">
                     <select id="cabang" name="cabang" class="w-full border border-gray-300 rounded-md p-2.5 appearance-none text-gray-500 placeholder-gray-300">
                         <option value="" disabled selected>Pilih Cabang</option>
                         <?php foreach ($branch_options as $bOption): ?>
-                            <option value="<?= esc($bOption) ?>"><?= esc($bOption) ?></option>
+                            <option value="<?= esc($bOption) ?>" <?= (isset($filters['cabang']) && $filters['cabang'] === $bOption) ? 'selected' : '' ?>><?= esc($bOption) ?></option>
                         <?php endforeach; ?>
                     </select>
                     <div class="pointer-events-none absolute top-3 right-3 text-gray-400 select-none">▼</div>
@@ -72,16 +72,24 @@
             <div class="flex-1">
                 <label for="dari_tanggal" class="block text-gray-700 mb-1 font-semibold">Dari Tanggal</label>
                 <div class="relative">
-                    <input type="date" id="dari_tanggal" name="dari_tanggal" class="w-full border border-gray-300 rounded-md p-2.5 placeholder-gray-400" placeholder="YYYY-MM-DD" />
+                    <input type="date" id="dari_tanggal" name="dari_tanggal" value="<?= esc($filters['dari_tanggal'] ?? '') ?>" class="w-full border border-gray-300 rounded-md p-2.5 placeholder-gray-400" placeholder="YYYY-MM-DD" />
                     <div class="pointer-events-none absolute top-3 right-3 text-gray-400 select-none">📅</div>
                 </div>
             </div>
             <div class="flex-1">
                 <label for="sampai_tanggal" class="block text-gray-700 mb-1 font-semibold">Sampai Tanggal</label>
                 <div class="relative">
-                    <input type="date" id="sampai_tanggal" name="sampai_tanggal" class="w-full border border-gray-300 rounded-md p-2.5 placeholder-gray-400" placeholder="YYYY-MM-DD" />
+                    <input type="date" id="sampai_tanggal" name="sampai_tanggal" value="<?= esc($filters['sampai_tanggal'] ?? '') ?>" class="w-full border border-gray-300 rounded-md p-2.5 placeholder-gray-400" placeholder="YYYY-MM-DD" />
                     <div class="pointer-events-none absolute top-3 right-3 text-gray-400 select-none">📅</div>
                 </div>
+            </div>
+            <div class="flex items-end space-x-2">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2.5 rounded-md hover:bg-blue-700 transition-colors">
+                    Filter
+                </button>
+                <a href="<?= base_url('superadmin/penjualan/laporan') ?>" class="bg-gray-500 text-white px-6 py-2.5 rounded-md hover:bg-gray-600 transition-colors">
+                    Reset
+                </a>
             </div>
         </form>
     </section>

@@ -6,7 +6,7 @@
 
     <div class="">
       <h1 class="font-medium text-[#1f2937]"><?= esc($title) ?></h1>
-      <p class="text-[#4B5563] text-sm"><?= ($status === 'aktif') ? 'Rp ' . esc($value) . ' hari ini' : 'Tidak aktif' ?></p>
+      <p class="text-[#4B5563] text-sm"><?= ($status === 'aktif') ? ' ' . esc($value) . ' hari ini' : 'Tidak aktif' ?></p>
     </div>
   </div>
   <p class="text-sm font-medium <?= ($status === 'aktif') ? esc($color_percentase) : 'text-[#6B7280]' ?>"><?= ($status === 'aktif') ? esc($percentase) : 'Offline' ?></p>

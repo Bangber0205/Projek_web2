@@ -3,19 +3,37 @@
 namespace App\Controllers\SuperAdmin;
 
 use App\Controllers\BaseController;
+use App\Models\NotificationModel;
 
 class BranchController extends BaseController
 {
     protected $db;
+    protected $notificationModel;
 
     public function __construct()
     {
         $this->db = \Config\Database::connect();
+        $this->notificationModel = new NotificationModel();
     }
 
     public function index()
     {
-        $branches = $this->db->table('branches')->get()->getResultArray();
+        $keyword = $this->request->getGet('keyword');
+
+        $query = $this->db->table('branches');
+
+        if (!empty($keyword)) {
+            $query->groupStart()
+                ->like('id', $keyword)
+                ->orLike('name', $keyword)
+                ->orLike('location', $keyword)
+                ->orLike('contact', $keyword)
+                ->orLike('status', $keyword)
+                ->orLike('opening_date', $keyword)
+            ->groupEnd();
+        }
+
+        $branches = $query->get()->getResultArray();
 
         $totalBranches = count($branches);
         $activeBranches = count(array_filter($branches, fn($b) => $b['status'] === 'aktif'));
@@ -62,6 +80,13 @@ class BranchController extends BaseController
         ];
 
         $this->db->table('branches')->insert($data);
+
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Cabang Baru Ditambahkan',
+            'message' => "Cabang '{$data['name']}' telah berhasil ditambahkan.",
+            'type' => 'success'
+        ]);
 
         return redirect()->to('superadmin/branches')->with('message', 'Cabang berhasil ditambahkan');
     }
@@ -112,6 +137,13 @@ class BranchController extends BaseController
 
         $this->db->table('branches')->where('id', $id)->update($data);
 
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Cabang Diperbarui',
+            'message' => "Cabang '{$data['name']}' telah berhasil diperbarui.",
+            'type' => 'info'
+        ]);
+
         return redirect()->to('superadmin/branches')->with('message', 'Cabang berhasil diperbarui');
     }
 
@@ -124,6 +156,13 @@ class BranchController extends BaseController
         }
 
         $this->db->table('branches')->where('id', $id)->delete();
+
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Cabang Dihapus',
+            'message' => "Cabang '{$branch['name']}' telah berhasil dihapus.",
+            'type' => 'warning'
+        ]);
 
         return redirect()->to('superadmin/branches')->with('message', 'Cabang berhasil dihapus');
     }

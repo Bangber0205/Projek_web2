@@ -3,6 +3,7 @@
 namespace App\Controllers\SuperAdmin;
 
 use App\Controllers\BaseController;
+use App\Models\NotificationModel;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Authorization\GroupModel;
 
@@ -10,16 +11,19 @@ class UserController extends BaseController
 {
     protected $userModel;
     protected $groupModel;
+    protected $notificationModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->groupModel = new GroupModel();
+        $this->notificationModel = new NotificationModel();
     }
 
     public function index()
     {
         $search = $this->request->getGet('search');
+        $role = $this->request->getGet('role');
 
         $query = $this->userModel
             ->select('users.*, auth_groups.name as group_name')
@@ -30,15 +34,27 @@ class UserController extends BaseController
             $query->groupStart()
                 ->like('users.username', $search)
                 ->orLike('users.email', $search)
+                ->orLike('auth_groups.name', $search)
+                ->orLike('users.id', $search)
+                ->orLike('users.created_at', $search)
+                ->orLike("CONCAT('UR', LPAD(users.id, 3, '0'))", $search)
+                ->orLike("DATE_FORMAT(users.created_at, '%d-%m-%Y')", $search)
                 ->groupEnd();
         }
 
-        $users = $query->findAll();
+        if ($role) {
+            $query->where('auth_groups.name', $role);
+        }
+
+        $users = $query->groupBy('users.id')->findAll();
+        $groups = $this->groupModel->findAll();
 
         return view('superAdmin/users/index', [
             'title_page' => 'Daftar User',
             'users' => $users,
-            'search' => $search
+            'search' => $search,
+            'role' => $role,
+            'groups' => $groups
         ]);
     }
 
@@ -85,6 +101,13 @@ class UserController extends BaseController
         $groupId = $this->request->getPost('group_id');
 
         $this->groupModel->addUserToGroup($userId, $groupId);
+
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'User Baru Ditambahkan',
+            'message' => "User '{$data['username']}' telah berhasil ditambahkan ke sistem.",
+            'type' => 'success'
+        ]);
 
         return redirect()->to('superadmin/users')->with('message', 'User berhasil ditambahkan');
     }
@@ -143,12 +166,27 @@ class UserController extends BaseController
         $this->groupModel->removeUserFromAllGroups($id);
         $this->groupModel->addUserToGroup($id, $groupId);
 
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'User Diperbarui',
+            'message' => "User '{$data['username']}' telah berhasil diperbarui.",
+            'type' => 'info'
+        ]);
+
         return redirect()->to('superadmin/users')->with('message', 'User berhasil diperbarui');
     }
 
     public function delete($id)
     {
+        $user = $this->userModel->find($id);
         if ($this->userModel->delete($id)) {
+            // Log notification
+            $this->notificationModel->createNotification([
+                'title' => 'User Dihapus',
+                'message' => "User '{$user['username']}' telah berhasil dihapus.",
+                'type' => 'warning'
+            ]);
+
             return redirect()->to('superadmin/users')->with('message', 'User berhasil dihapus');
         }
 

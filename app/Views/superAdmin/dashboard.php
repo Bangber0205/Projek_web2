@@ -31,7 +31,7 @@
 
   <?= view('components/card-stats', [
       'title' => 'Total Penjualan',
-      'value' => 'Rp 2.4M',
+      'value' => 'Rp ' . (isset($totalSales) && $totalSales > 0 ? number_format($totalSales, 0, ',', '.') : 0),
       'bg_icon' => 'bg-[#FEF9C3]',
       'icon'  => '
           <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,8 +40,8 @@
   ]) ?>
 
   <?= view('components/card-stats', [
-      'title' => 'Produk Aktif',
-      'value' => isset($totalActiveProducts) && $totalActiveProducts > 0 ? $totalActiveProducts : 0,
+      'title' => 'Total Produk',
+      'value' => isset($totalProducts) && $totalProducts >= 1 ? $totalProducts : 0,
       'bg_icon' => 'bg-[#F3E8FF]',
       'icon'  => '
           <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">

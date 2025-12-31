@@ -4,25 +4,33 @@ namespace App\Controllers\SuperAdmin;
 
 use App\Controllers\BaseController;
 use App\Models\ItemModel;
+use App\Models\CategoryModel;
+use App\Models\NotificationModel;
 
 class ItemController extends BaseController
 {
     protected $itemModel;
+    protected $notificationModel;
 
     public function __construct()
     {
         $this->itemModel = new ItemModel();
+        $this->notificationModel = new NotificationModel();
     }
 
     public function index()
     {
         $data['items'] = $this->itemModel->findAll();
+        $categoryModel = new CategoryModel();
+        $data['categories'] = $categoryModel->findAll();
         return view('superAdmin/items/index', $data);
     }
 
     public function create()
     {
-        return view('superAdmin/items/create');
+        $categoryModel = new CategoryModel();
+        $data['categories'] = $categoryModel->findAll();
+        return view('superAdmin/items/create', $data);
     }
 
     public function store()
@@ -42,6 +50,13 @@ class ItemController extends BaseController
         $this->itemModel->save($data);
         session()->setFlashdata('success', 'Barang berhasil ditambahkan.');
 
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Barang Baru Ditambahkan',
+            'message' => "Barang '{$data['nama_barang']}' telah berhasil ditambahkan ke sistem.",
+            'type' => 'success'
+        ]);
+
         return redirect()->to('superadmin/items');
     }
 
@@ -52,6 +67,9 @@ class ItemController extends BaseController
         if (!$data['item']) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Item with ID $id not found");
         }
+
+        $categoryModel = new CategoryModel();
+        $data['categories'] = $categoryModel->findAll();
 
         return view('superAdmin/items/edit', $data);
     }
@@ -73,12 +91,28 @@ class ItemController extends BaseController
 
         $this->itemModel->save($data);
 
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Barang Diperbarui',
+            'message' => "Barang '{$data['nama_barang']}' telah berhasil diperbarui.",
+            'type' => 'info'
+        ]);
+
         return redirect()->to('superadmin/items');
     }
 
     public function delete($id)
     {
+        $item = $this->itemModel->find($id);
         $this->itemModel->delete($id);
+
+        // Log notification
+        $this->notificationModel->createNotification([
+            'title' => 'Barang Dihapus',
+            'message' => "Barang '{$item['nama_barang']}' telah berhasil dihapus.",
+            'type' => 'warning'
+        ]);
+
         return redirect()->to('superadmin/items');
     }
 }

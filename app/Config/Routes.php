@@ -15,6 +15,13 @@ $routes->get('register', 'AuthController::register');
 $routes->post('register', 'AuthController::attemptRegister');
 $routes->get('logout', 'AuthController::logout');
 
+// Notification API routes
+$routes->group('api', function($routes) {
+    $routes->get('notifications', 'NotificationController::index');
+    $routes->post('notifications/mark-read/(:num)', 'NotificationController::markAsRead/$1');
+    $routes->delete('notifications/delete/(:num)', 'NotificationController::delete/$1');
+});
+
 $routes->group('superadmin', function($routes) {
     $routes->get('dashboard', 'SuperAdmin\Dashboard::index');
     $routes->get('users', 'SuperAdmin\UserController::index');
@@ -59,3 +66,4 @@ $routes->group('owner', function($routes){
     $routes->get('stok-barang/delete/(:num)', 'Owner\StokBarangController::delete/$1');
     $routes->get('input-penjualan', 'Owner\InputPenjualanController::index');
 });
+?>
