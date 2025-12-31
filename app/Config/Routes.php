@@ -22,7 +22,7 @@ $routes->group('api', function($routes) {
     $routes->delete('notifications/delete/(:num)', 'NotificationController::delete/$1');
 });
 
-$routes->group('superadmin', function($routes) {
+$routes->group('superadmin', ['filter' => 'role:superadmin'], function($routes) {
     $routes->get('dashboard', 'SuperAdmin\Dashboard::index');
     $routes->get('users', 'SuperAdmin\UserController::index');
     $routes->get('users/create', 'SuperAdmin\UserController::create');
@@ -55,7 +55,7 @@ $routes->group('superadmin', function($routes) {
 });
 
 // Owner
-$routes->group('owner', function($routes){
+$routes->group('owner', ['filter' => 'role:owner'], function($routes){
     $routes->get('dashboard', 'Owner\Dashboard::index');
     $routes->get('riwayat-transaksi', 'Owner\RiwayatTransaksi::index');
     $routes->get('stok-barang', 'Owner\StokBarangController::index');
@@ -65,5 +65,10 @@ $routes->group('owner', function($routes){
     $routes->post('stok-barang/update/(:num)', 'Owner\StokBarangController::update/$1');
     $routes->get('stok-barang/delete/(:num)', 'Owner\StokBarangController::delete/$1');
     $routes->get('input-penjualan', 'Owner\InputPenjualanController::index');
+    $routes->post('input-penjualan/add', 'Owner\InputPenjualanController::addToCart');
+    $routes->post('input-penjualan/remove', 'Owner\InputPenjualanController::removeFromCart');
+    $routes->post('input-penjualan/remove', 'Owner\InputPenjualanController::removeFromCart');
+    $routes->post('input-penjualan/clear', 'Owner\InputPenjualanController::clearCart');
+    $routes->post('input-penjualan/save', 'Owner\InputPenjualanController::save');
 });
 ?>
