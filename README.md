@@ -407,4 +407,4 @@ Jika ada pertanyaan atau issue, silakan buat issue di GitHub repository.
 
 ---
 
-**Happy Coding! 🚀**
+**Happy Coding, ALL! 🚀**
